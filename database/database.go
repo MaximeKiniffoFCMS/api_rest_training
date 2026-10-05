@@ -12,7 +12,7 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	dsn := "host=localhost user=postgres password=postgres dbname=api_rest_go port=5432 sslmode=disable"
+	dsn := "host=host.docker.internal user=postgres password=postgres dbname=api_rest_go port=5432 sslmode=disable"
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
