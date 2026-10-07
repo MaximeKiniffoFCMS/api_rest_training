@@ -13,5 +13,15 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: params.BRANCH]], userRemoteConfigs: [[url: 'https://github.com/kiniffo/api_rest_training.git']]])
             }
         }
+        stage('Build') {
+            steps {
+                sh 'go build -o api_rest_training'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'go test ./...'
+            }
+        }
     }
 }
