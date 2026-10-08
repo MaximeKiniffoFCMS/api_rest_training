@@ -12,7 +12,7 @@ node {
     agent any
     
     stage('Checkout') {
-      checkout([$class: 'GitSCM', branches: [[name: params.BRANCH_NAME]], userRemoteConfigs: [[url: 'https://github.com/kiniffo/api_rest_training.git']]])
+      checkout([$class: 'GitSCM', branches: [[name: params.BRANCH_NAME]], userRemoteConfigs: [[url: 'https://github.com/MaximeKiniffoFCMS/api_rest_training.git']]])
     }
     
     stage('Build') {
