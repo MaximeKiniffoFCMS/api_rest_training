@@ -1,6 +1,10 @@
 properties([
     parameters([
-        stringParam('BRANCH', 'main', 'Branch to build')
+        string(
+            name: 'BRANCH',
+            defaultValue: 'main',
+            description: 'Branch to build'
+        )
     ])
 ])
 
