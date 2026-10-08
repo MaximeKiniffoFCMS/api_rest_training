@@ -1,5 +1,4 @@
-
-appVersion = ''
+def appVersion = env.BUILD_NUMBER
 def projectName = "api-rest-training"
 def projectNamespace = "immo"
 def repoURL = "https://github.com/MaximeKiniffoFCMS/api_rest_training.git"
