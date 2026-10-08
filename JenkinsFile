@@ -1,31 +1,25 @@
 properties([
     parameters([
         string(
-            name: 'BRANCH',
+            name: 'BRANCH_NAME',
             defaultValue: 'main',
             description: 'Branch to build'
         )
     ])
 ])
 
-pipeline {
+node {
     agent any
     
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: params.BRANCH]], userRemoteConfigs: [[url: 'https://github.com/kiniffo/api_rest_training.git']]])
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'go build -o api_rest_training'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'go test ./...'
-            }
-        }
+    stage('Checkout') {
+      checkout([$class: 'GitSCM', branches: [[name: params.BRANCH_NAME]], userRemoteConfigs: [[url: 'https://github.com/kiniffo/api_rest_training.git']]])
+    }
+    
+    stage('Build') {
+      sh 'go build -o api_rest_training'
+    }
+    
+    stage('Test') {
+      sh 'go test ./...'
     }
 }
