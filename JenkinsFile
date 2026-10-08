@@ -1,3 +1,16 @@
+
+appVersion = ''
+def projectName = "api-rest-training"
+def projectNamespace = "immo"
+def repoURL = "https://github.com/MaximeKiniffoFCMS/api_rest_training.git"
+def cloudBuildFilesDir = "deployments/cloud-build"
+def googleProjectId = "project-staging1"
+String githubTokenCredentialID = 'github_token'
+String githubTokenVar = 'GITHUB_TOKEN'
+String gKEClusterName = 'cluster-staging'
+String gKEClusterZone = 'europe-west1-d'
+String githubCredentialsId = 'github_access'
+
 properties([
     parameters([
         string(
@@ -11,14 +24,21 @@ properties([
 node {
     
     stage('Checkout') {
-      checkout([$class: 'GitSCM', branches: [[name: params.BRANCH_NAME]], userRemoteConfigs: [[url: 'https://github.com/MaximeKiniffoFCMS/api_rest_training.git']]])
+      checkout([$class: 'GitSCM', branches: [[name: params.BRANCH_NAME]], userRemoteConfigs: [[url: repoURL]]])
     }
     
     stage('Build') {
-      sh 'go build -o api_rest_training'
-    }
-    
-    stage('Test') {
-      sh 'go test ./...'
-    }
+            withCredentials([string(credentialsId: githubTokenCredentialID, variable: githubTokenVar)]) {
+                googleCloudBuild \
+                credentialsId: googleProjectId,
+                source: local('.'),
+                request: file(cloudBuildFilesDir + '/build.yaml'),
+                substitutions: [
+                    _IMAGE_VERSION: appVersion,
+                    _PROJECT_NAME: projectName,
+                    _PROJECT_ID: googleProjectId,
+                    _GITHUB_TOKEN: GITHUB_TOKEN
+                ]
+            }
+        }
 }
