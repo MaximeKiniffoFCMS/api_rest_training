@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-rest-training-deployment
+  labels:
+    app: api-rest-training
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-rest-training
+  template:
+    metadata:
+      labels:
+        app: api-rest-training
+    spec:
+      containers:
+      - name: api-rest-training
+        image: gcr.io/project-staging1/api-rest-training:15
+        ports:
+        - containerPort: 8080
