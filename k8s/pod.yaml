@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: devops-kiniffo-pod
+  labels:
+    app: devops-kiniffo-pod
+
+spec:
+  containers:
+    - name: api-go
+      image: gcr.io/project-staging1/api-rest-training:15
+
+      ports:
+        - containerPort: 8080
+
+      resources:
+        requests:
+          cpu: "10m"
+          memory: "64Mi"
+        limits:
+          cpu: "50m"
+          memory: "128Mi"
