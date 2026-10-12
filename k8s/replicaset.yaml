@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: api-rest-training-rs
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-rest-training-rs
+  template:
+    metadata:
+      labels:
+        app: api-rest-training-rs
+        environment: dev
+    spec:
+      containers:
+      - name: api-go
+        image: gcr.io/project-staging1/api-rest-training:15
+        ports:
+        - containerPort: 8080
